@@ -16,10 +16,30 @@ if option.upcase == 'A'
     puts fridge.location
   end
     fridge_selected = gets.chomp
-    Fridge.find_by_location(fridge_selected).Food.all
-    # puts fridge_selected.Food.all
+    puts "Here's a list of the food in the #{fridge_selected} fridge:"
+    Fridge.find_by_location(fridge_selected).food.all.each_with_index do |food|
+      puts food.name
+    end
+      puts "Would you like to add some food to #{fridge_selected}? (y/n)"
+      add_food = gets.chomp
+        if add_food == "y"
+          puts "Enter food name."
+          name = gets.chomp
 
-# Food.joins(:fridge).where('Fridge.location = fridge_selected')
+          puts "Enter food weight in pounds."
+          weight = gets.chomp
+
+          puts "Is your food vegan? (y/n)"
+            is_vegan = gets.chomp
+              if is_vegan == "y"
+                has_food = true
+              else
+                is_vegan = false
+              end
+          puts "You have added a new food to #{fridge_selected}!"
+          Food.create(name: name, weight: weight, is_vegan: is_vegan)
+
+        end
 
 
 
@@ -63,7 +83,6 @@ end
 
 
 # TO DO
-# View all food items in a specific fridge
 # Add a food item to a fridge
 # Eat a food item from a fridge (delete it)
 # View all drink items in a specific fridge
